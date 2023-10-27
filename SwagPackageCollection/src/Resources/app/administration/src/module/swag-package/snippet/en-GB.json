@@ -1,0 +1,24 @@
+{
+    "swag-package": {
+        "general": {
+            "mainMenuItemGeneral": "Package",
+            "descriptionTextModule": "Manage package types here"
+        },
+        "list": {
+            "addButtonText": "Add Package",
+            "columnName": "Name",
+            "columnHeight": "Height",
+            "columnWidth": "Width",
+            "columnLength": "Length"
+        },
+        "detail": {
+            "errorTitle": "unable to perform the action",
+            "cancelBtnText": "Cancel",
+            "saveBtnText": "Save",
+            "name": "Name",
+            "height": "Height",
+            "width": "Width",
+            "length": "Length"
+        }
+    }
+}

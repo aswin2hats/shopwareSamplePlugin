@@ -1,0 +1,10 @@
+{% block sw_cms_element_config_collection_form %}
+<sw-tagged-field
+    v-model="element.config.mailReceiver.value"
+    :class="getLastMailClass"
+    label="Emails"
+    name="mailReceiver"
+    placeholder="john@doe.com"
+    @change="updateMailReceiver"
+/>
+{% endblock %}

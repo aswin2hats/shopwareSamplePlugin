@@ -1,0 +1,29 @@
+{% block swag_package_detail %}
+    <sw-page class="swag-package-detail">
+        <template #smart-bar-actions>
+            <sw-button :routerLink="{ name: 'swag.package.index' }">
+                {{ $tc('swag-package.detail.cancelBtnText') }}
+            </sw-button>
+
+            <sw-button-process
+                :isLoading="isLoading"
+                :processSuccess="processSuccess"
+                variant="primary"
+                @process-finish="saveFinish"
+                @click="onClickSave">
+                {{ $tc('swag-package.detail.saveBtnText') }}
+            </sw-button-process>
+        </template>
+
+        <template #content>
+            <sw-card-view>
+                <sw-card v-if="package" :isLoading="isLoading">
+                    <sw-field v-model="package.name" :label="$tc('swag-package.detail.name')"></sw-field>
+                    <sw-field v-model="package.height" :label="$tc('swag-package.detail.height')"></sw-field>
+                    <sw-field v-model="package.width" :label="$tc('swag-package.detail.width')"></sw-field>
+                    <sw-field v-model="package.length" :label="$tc('swag-package.detail.length')"></sw-field>
+                </sw-card>
+            </sw-card-view>
+        </template>
+    </sw-page>
+{% endblock %}
