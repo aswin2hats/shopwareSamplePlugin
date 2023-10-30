@@ -1,59 +1,80 @@
 {% block sw_cms_element_collection_form %}
-<div class="sw-cms-el-form-contact">
-    <h3 class="sw-cms-el-form-headline">
-        {{ $tc('sw-cms.elements.collection-form.label') }}
-    </h3>
+<div class="sw-cms-el-collection-form">
+    <div class="sw-cms-el-form-contact">
+        <h3 class="sw-cms-el-form-headline">
+            {{ $tc('sw-cms.elements.collection-form.label') }}
+        </h3>
 
-    <div class="sw-cms-el-form-contact-form-group two-items">
-        <sw-select-field :label="$tc('sw-cms.elements.collection-form.element.label.salutation')">
-            <option
-                value=""
-                disabled
-                selected
-            >
-                {{ $tc('sw-cms.elements.collection-form.element.label.salutationUndisclosed') }}
-            </option>
-        </sw-select-field>
+        <div class="sw-cms-el-form-contact-form-group two-items">
+            <sw-select-field :label="$tc('sw-cms.elements.collection-form.element.label.salutation')">
+                <option
+                    value=""
+                    disabled
+                    selected
+                >
+                    {{ $tc('sw-cms.elements.collection-form.element.label.salutationUndisclosed') }}
+                </option>
+            </sw-select-field>
 
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.name')"
-        />
-    </div>
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.name')"
+            />
+        </div>
 
-    <div class="sw-cms-el-form-contact-form-group two-items">
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.email')"
-        />
+        <div class="sw-cms-el-form-contact-form-group two-items">
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.email')"
+            />
 
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.phone')"
-        />
-    </div>
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.phone')"
+            />
+        </div>
 
-    <h4>{{ $tc('sw-cms.elements.collection-form.element.label.address') }}</h4>
+        <h4>{{ $tc('sw-cms.elements.collection-form.element.label.address') }}</h4>
 
-    <div class="sw-cms-el-form-contact-form-group three-items">
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.street')"
-        />
+        <div class="sw-cms-el-form-contact-form-group two-items">
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.street')"
+            />
 
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.city')"
-        />
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.city')"
+            />
+        </div>
 
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.zipcode')"
-        />
-    </div>
+        <div class="sw-cms-el-form-contact-form-group two-items">
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.zipcode')"
+            />
+            <sw-text-field
+                :label="$tc('sw-cms.elements.collection-form.element.label.collectionDate')"
+                :placeholder="$tc('sw-cms.elements.collection-form.element.label.collectionDatePlaceHolder')"
+            />
+        </div>
 
-    <div class="sw-cms-el-form-contact-form-group two-items">
-        <sw-text-field
-            :label="$tc('sw-cms.elements.collection-form.element.label.collectionDate')"
-        />
-    </div>
+        <h4>{{ $tc('sw-cms.elements.collection-form.element.label.packages') }}</h4>
+        <div class="sw-cms-el-form-contact-form-group three-items">
+            <sw-select-field :label="$tc('sw-cms.elements.collection-form.element.label.packageType')">
+                <option
+                    value=""
+                    disabled
+                    selected
+                >
+                    {{ $tc('sw-cms.elements.collection-form.element.label.packageType') }}
+                </option>
+            </sw-select-field>
+            <sw-text-field :label="$tc('sw-cms.elements.collection-form.element.label.quantity')" />
+            <div class="sw-cms-el-form__action">
+                +
+            </div>
+        </div>
+        <br>
+        <br>
 
-    <div class="sw-cms-el-form__action">
-        {{ $tc('sw-cms.elements.collection-form.element.label.submit') }}
+        <div class="sw-cms-el-form__action">
+            {{ $tc('sw-cms.elements.collection-form.element.label.submit') }}
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -21,7 +21,11 @@
                         "city": "City",
                         "zipcode": "Zipcode",
                         "collectionDate": "Collection Date",
-                        "submit": "Submit"
+                        "collectionDatePlaceHolder": "mm/dd/yyyy",
+                        "submit": "Submit",
+                        "packages": "Packages",
+                        "packageType": "Package Type",
+                        "quantity": "Quantity"
                     }
                 }
             }
