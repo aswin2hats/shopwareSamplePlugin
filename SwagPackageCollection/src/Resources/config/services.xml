@@ -8,5 +8,25 @@
         <service id="SwagPackageCollection\Core\Content\Package\PackageDefinition">
             <tag name="shopware.entity.definition" entity="swag_package"></tag>
         </service>
+
+        <service id="SwagPackageCollection\DataResolver\PackageDataCmsElementResolver">
+            <argument id="swag_package.repository" type="service" />
+            <argument id="salutation.repository" type="service" />
+            <tag name="shopware.cms.data_resolver" />
+        </service>
+
+        <service id="SwagPackageCollection\Storefront\Controller\PackageFormController">
+            <argument id="SwagPackageCollection\Core\Content\Package\SalesChannel\AbstractPackageCollectionFormRoute" type="service" />
+
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="SwagPackageCollection\Core\Content\Subscriber\BusinessEventCollectorSubscriber">
+            <argument type="service" id="Shopware\Core\Framework\Event\BusinessEventCollector"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
     </services>
 </container>

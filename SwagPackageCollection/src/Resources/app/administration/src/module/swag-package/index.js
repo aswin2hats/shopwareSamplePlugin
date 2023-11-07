@@ -41,12 +41,19 @@ Module.register('swag-package', {
         }
     },
 
-    navigation: [{
-        parent: 'sw-extension',
-        label: 'swag-package.general.mainMenuItemGeneral',
-        color: '#ff3d58',
-        path: 'swag.package.index',
+
+    settingsItem: [{
+        to: 'swag.package.index',
+        group: 'system',
         icon: 'default-shopping-paper-bag-product',
-        position: 100,
+        name: 'swag-package.general.mainMenuItemGeneral',
     }]
+    // navigation: [{
+    //     parent: 'sw-extension',
+    //     label: 'swag-package.general.mainMenuItemGeneral',
+    //     color: '#ff3d58',
+    //     path: 'swag.package.index',
+    //     icon: 'default-shopping-paper-bag-product',
+    //     position: 100,
+    // }]
 });

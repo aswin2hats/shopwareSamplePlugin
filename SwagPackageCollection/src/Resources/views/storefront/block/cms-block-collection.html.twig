@@ -1,0 +1,10 @@
+{% block block_collection %}
+   {% set element = block.slots.getSlot('collectionForm') %}
+   {% set columns = 1 %}
+
+   <div class="col-12" data-cms-element-id="{{ element.id }}">
+      {% block block_warehouse_slider_inner %}
+         {% sw_include "@Storefront/storefront/element/cms-element-collection-form.html.twig" ignore missing %}
+      {% endblock %}
+   </div>
+{% endblock %}

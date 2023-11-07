@@ -1,0 +1,20 @@
+{
+    "collectionForm": {
+        "labels": {
+            "salutation": "Salutation",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "street": "Street",
+            "city": "City",
+            "zip_code": "Zip code",
+            "collection_date": "Collection Date",
+            "package_type": "Package Type",
+            "quantity": "Quantity",
+            "address": "Address",
+            "packages": "Packages",
+            "submit": "Submit",
+            "select_package_type": "Select package type"
+        }
+    }
+}

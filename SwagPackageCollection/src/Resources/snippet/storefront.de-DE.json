@@ -1,0 +1,20 @@
+{
+    "collectionForm": {
+        "labels": {
+            "salutation": "Anrede",
+            "name": "Name",
+            "email": "Email",
+            "phone": "Telefon",
+            "street": "Straße",
+            "city": "Stadt",
+            "zip_code": "PLZ",
+            "collection_date": "Abholtermin",
+            "package_type": "Pakettyp",
+            "quantity": "Menge",
+            "address": "Adresse",
+            "packages": "Pakete",
+            "submit": "Submit",
+            "select_package_type": "Select package type"
+        }
+    }
+}
