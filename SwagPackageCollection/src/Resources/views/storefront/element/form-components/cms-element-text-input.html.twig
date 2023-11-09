@@ -1,0 +1,23 @@
+{% block cms_element_from_imput %}
+    <div class="form-group">
+        {% block cms_element_from_imput_label %}
+        <label>{{ label | trans }}</label>
+        {% endblock %}
+
+        {% block cms_element_from_imput_input %}
+        <input name="{{ fieldName }}"
+                   type="{{ type ?? 'text'}}"
+                   id="form-{{ fieldName }}"
+                   value="{{ data.get( fieldName ) }}"
+                   placeholder="{{ placeholder|trans }}"
+                   {% if required %}required="required"{% endif %}
+                   class="form-control{% if formViolations.getViolations( '/' ~ fieldName ) %} is-invalid{% endif %}"/>
+
+            {% if formViolations.getViolations( '/' ~ fieldName ) is not empty %}
+                {% sw_include '@Storefront/storefront/utilities/form-violation.html.twig' with {
+                    violationPath: ('/' ~ fieldName)
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

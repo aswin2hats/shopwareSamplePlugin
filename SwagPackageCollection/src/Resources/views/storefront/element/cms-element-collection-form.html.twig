@@ -5,32 +5,53 @@
           data-form-validation="true">
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.salutation" | trans }}</label>
-                    <select class="custom-select" name='salutationId' required>
-                        {% for salutation in element.data.salutation.elements %}
-                            <option value="{{ salutation.id }}">{{ salutation.displayName }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                {% block cms_form_contact_input_salutation %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-select.html.twig'
+                        with {
+                            fieldName: 'salutationId',
+                            options: element.data.salutation.elements,
+                            required: true,
+                            label: 'collectionForm.labels.salutation',
+                            placeholder: 'collectionForm.labels.salutation'
+                        }
+                    %}
+                {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.name" | trans }}</label>
-                    <input type="text" name="name" class="form-control" required/>
-                </div>
+            {% block cms_form_contact_input_name %}
+                {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                    with {
+                        fieldName: 'name',
+                        required: true,
+                        label: 'collectionForm.labels.name',
+                        placeholder: 'collectionForm.labels.name'
+                    }
+                %}
+            {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.email" | trans }}</label>
-                    <input type="text" name="email" class="form-control" required/>
-                </div>
+                {% block cms_form_contact_input_email %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            fieldName: 'email',
+                            required: true,
+                            label: 'collectionForm.labels.email',
+                            placeholder: 'collectionForm.labels.email'
+                        }
+                    %}
+                {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.phone" | trans }}</label>
-                    <input type="text" name="phone" class="form-control" required/>
-                </div>
+                {% block cms_form_contact_input_phone %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            fieldName: 'phone',
+                            required: true,
+                            label: 'collectionForm.labels.phone',
+                            placeholder: 'collectionForm.labels.phone'
+                        }
+                    %}
+                {% endblock %}
             </div>
         </div>
         <div class="row">
@@ -38,28 +59,53 @@
                 <h5>{{ "collectionForm.labels.address" | trans }}</h5>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.street" | trans }}</label>
-                    <input type="text" name="street" class="form-control" required/>
-                </div>
+                {% block cms_form_contact_input_street %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            fieldName: 'street',
+                            required: true,
+                            label: 'collectionForm.labels.street',
+                            placeholder: 'collectionForm.labels.street'
+                        }
+                    %}
+                {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.city" | trans }}</label>
-                    <input type="text" name="city" class="form-control" required />
-                </div>
+                {% block cms_form_contact_input_city %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            fieldName: 'city',
+                            required: true,
+                            label: 'collectionForm.labels.city',
+                            placeholder: 'collectionForm.labels.city'
+                        }
+                    %}
+                {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.zip_code" | trans }}</label>
-                    <input type="text" name="zip_code" class="form-control" required />
-                </div>
+                {% block cms_form_contact_input_zip_code %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            fieldName: 'zip_code',
+                            required: true,
+                            label: 'collectionForm.labels.zip_code',
+                            placeholder: 'collectionForm.labels.zip_code'
+                        }
+                    %}
+                {% endblock %}
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label>{{ "collectionForm.labels.collection_date" | trans }}</label>
-                    <input type="date" name="collection_date" class="form-control" required />
-                </div>
+                {% block cms_form_contact_input_collection_date %}
+                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                        with {
+                            type: "date",
+                            fieldName: 'collection_date',
+                            required: true,
+                            label: 'collectionForm.labels.collection_date',
+                            placeholder: 'collectionForm.labels.collection_date'
+                        }
+                    %}
+                {% endblock %}
             </div>
         </div>
         <div class="row">
@@ -71,21 +117,29 @@
                     <div class="col-md-11 packages-first">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{ "collectionForm.labels.package_type" | trans }}</label>
-                                    <select class="custom-select" name="package_type[]" required>
-                                    <option value="">{{ "collectionForm.labels.select_package_type" | trans }}</option>
-                                    {% for package in element.data.packages.elements %}
-                                        <option value="{{ package.id }}">{{ package.name }} ({{ package.height }}x{{ package.width }}x{{ package.length }})</option>
-                                    {% endfor %}
-                                    </select>
-                                </div>
+                            {% block cms_form_contact_input_package_type %}
+                                {% sw_include '@Storefront/storefront/element/form-components/cms-element-package-select.html.twig'
+                                    with {
+                                        fieldName: 'package_type[]',
+                                        options: element.data.packages.elements,
+                                        required: true,
+                                        label: 'collectionForm.labels.select_package_type',
+                                        placeholder: 'collectionForm.labels.select_package_type'
+                                    }
+                                %}
+                            {% endblock %}
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{ "collectionForm.labels.quantity" | trans }}</label>
-                                    <input type="text" name="quantity[]" class="form-control" required/>
-                                </div>
+                                {% block cms_form_contact_input_quantity %}
+                                    {% sw_include '@Storefront/storefront/element/form-components/cms-element-text-input.html.twig'
+                                        with {
+                                            fieldName: 'quantity[]',
+                                            required: true,
+                                            label: 'collectionForm.labels.quantity',
+                                            placeholder: 'collectionForm.labels.quantity'
+                                        }
+                                    %}
+                                {% endblock %}
                             </div>
                         </div>
                     </div>
@@ -95,13 +149,29 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="additional-packages">
-
-                </div>
+                <div class="additional-packages"></div>
             </div>
             <div class="col-md-12">
                 <button class="btn btn-primary mt-4" type="submit">{{ "collectionForm.labels.submit" | trans }}</button>
             </div>
+                {% block cms_form_contact_hidden_fields %}
+                    <div class="form-hidden-fields">
+                        {% block cms_form_contact_csrf %}
+                            {{ sw_csrf('frontend.form.package_collection.send') }}
+                        {% endblock %}
+
+                        {% if page.navigationId and page.entityName %}
+                            <input type="hidden" name="navigationId" value="{{ page.navigationId }}">
+                            <input type="hidden" name="entityName" value="{{ page.entityName }}">
+                        {% else %}
+                            <input type="hidden" name="navigationId" value="{{ page.header.navigation.active.id }}">
+                        {% endif %}
+
+                        <input type="hidden" name="slotId" value="{{ element.id }}">
+
+                        <input type="button" class="submit--hidden d-none">
+                    </div>
+                {% endblock %}
         </div>
     </form>
 {% endblock %}

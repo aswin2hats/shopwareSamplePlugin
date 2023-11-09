@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+namespace SwagPackageCollection\Core\Content\Validation;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Validation\EntityExists;
 use Shopware\Core\Framework\Validation\BuildValidationEvent;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class PackageCollectionFormValidationFactory extends DataValidationFactoryInterface
+class PackageCollectionFormValidationFactory implements DataValidationFactoryInterface
 {
     /**
      * The regex to check if string contains an url
@@ -25,19 +26,12 @@ class PackageCollectionFormValidationFactory extends DataValidationFactoryInterf
     private $eventDispatcher;
 
     /**
-     * @var SystemConfigService
-     */
-    private $systemConfigService;
-
-    /**
      * @internal
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-        SystemConfigService $systemConfigService
     ) {
         $this->eventDispatcher = $eventDispatcher;
-        $this->systemConfigService = $systemConfigService;
     }
 
     public function create(SalesChannelContext $context): DataValidationDefinition

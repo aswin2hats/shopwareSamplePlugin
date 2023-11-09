@@ -1,7 +1,7 @@
 {
     "sw-flow": {
         "triggers": {
-            "example": "Example",
+            "packageCollectionForm": "Package Collection Form",
             "event": "Event"
         }
     }

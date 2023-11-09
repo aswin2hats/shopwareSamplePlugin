@@ -4,6 +4,7 @@ namespace SwagPackageCollection\Core\Content\Subscriber;
 
 use Shopware\Core\Framework\Event\BusinessEventCollector;
 use Shopware\Core\Framework\Event\BusinessEventCollectorEvent;
+use SwagPackageCollection\Core\Content\Package\Event\PackageCollectionFormEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class BusinessEventCollectorSubscriber implements EventSubscriberInterface
@@ -18,15 +19,15 @@ class BusinessEventCollectorSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            BusinessEventCollectorEvent::NAME => 'onAddPackageCollectionEvent',
+            BusinessEventCollectorEvent::NAME => 'onPackageCollectionEvent',
         ];
     }
 
-    public function onAddPackageCollectionEvent(BusinessEventCollectorEvent $event): void
+    public function onPackageCollectionEvent(BusinessEventCollectorEvent $event): void
     {
         $collection = $event->getCollection();
 
-        $definition = $this->businessEventCollector->define(BasicExampleEvent::class);
+        $definition = $this->businessEventCollector->define(PackageCollectionFormEvent::class);
 
         if (!$definition) {
             return;

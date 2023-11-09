@@ -16,16 +16,46 @@
         </service>
 
         <service id="SwagPackageCollection\Storefront\Controller\PackageFormController">
-            <argument id="SwagPackageCollection\Core\Content\Package\SalesChannel\AbstractPackageCollectionFormRoute" type="service" />
-
+            <argument id="SwagPackageCollection\Core\Content\Package\Service\PackageCollectionRoute" type="service" />
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <tag name="controller.service_arguments"/>
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
+        </service>
+
+        <service id="SwagPackageCollection\Core\Content\Validation\PackageCollectionFormValidationFactory" public="true">
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
+        <service id="SwagPackageCollection\Core\Content\Package\Service\PackageCollectionRoute" public="true">
+            <argument type="service" id="SwagPackageCollection\Core\Content\Validation\PackageCollectionFormValidationFactory"/>
+            <argument type="service" id="Shopware\Core\Framework\Validation\DataValidator"/>
+            <argument type="service" id="Symfony\Component\HttpFoundation\RequestStack"/>
+            <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="cms_slot.repository" />
+            <argument type="service" id="salutation.repository" />
+            <argument type="service" id="category.repository" />
+            <argument type="service" id="landing_page.repository" />
+            <argument type="service" id="product.repository" />
+        </service>
+
+        <service id="SwagPackageCollection\Core\Content\Package\Event\PackageCollectionFormEvent">
+            <tag name="event.listener" />
         </service>
 
         <service id="SwagPackageCollection\Core\Content\Subscriber\BusinessEventCollectorSubscriber">
             <argument type="service" id="Shopware\Core\Framework\Event\BusinessEventCollector"/>
             <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="SwagPackageCollection\Storefront\Element\PackageTypePageLoader">
+            <argument type="service" id="swag_package.repository"/>
+            <argument type="service" id="Shopware\Storefront\Page\GenericPageLoader"/>
         </service>
 
     </services>

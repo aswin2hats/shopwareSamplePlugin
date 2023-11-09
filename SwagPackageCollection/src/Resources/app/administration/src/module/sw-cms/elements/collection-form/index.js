@@ -11,7 +11,7 @@ Shopware.Service('cmsService').registerCmsElement({
     defaultConfig: {
         type: {
             source: 'static',
-            value: '',
+            value: 'Package Collection Form',
         },
         title: {
             source: 'static',
@@ -29,5 +29,8 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: '',
         },
+    },
+    defaultData: {
+        mailReceiver: []
     },
 });

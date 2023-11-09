@@ -8,10 +8,11 @@ use Shopware\Core\Framework\Validation\DataBag\RequestDataBag;
 use Shopware\Core\Framework\Validation\Exception\ConstraintViolationException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
-use SwagPackageCollection\Core\Content\Package\SalesChannel\AbstractPackageCollectionFormRoute;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Shopware\Core\Framework\Routing\Annotation\Since;
+use SwagPackageCollection\Core\Content\Package\Service\AbstractPackageCollectionFormRoute;
+use Doctrine\DBAL\Connection;
 
 /**
  * @Route(defaults={"_routeScope"={"storefront"}})
@@ -26,9 +27,15 @@ class PackageFormController extends StorefrontController
      */
     private $packageCollectionFormRoute;
 
-    public function __construct(AbstractPackageCollectionFormRoute $packageCollectionFormRoute)
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    public function __construct(AbstractPackageCollectionFormRoute $packageCollectionFormRoute, Connection $connection)
     {
         $this->packageCollectionFormRoute = $packageCollectionFormRoute;
+        $this->connection = $connection;
     }
 
     /**
@@ -38,6 +45,23 @@ class PackageFormController extends StorefrontController
     public function sendPackageCollectionForm(RequestDataBag $data, SalesChannelContext $context): JsonResponse
     {
         $response = [];
+
+        $packageTypes = $data->get('package_type');
+        $quantities = $data->get('quantity');
+        $packageTypeData = [];
+        foreach ($packageTypes as $index => $packageType) {
+            $indexString = (string) $index;
+            $packageArr[$packageType] =$quantities->get($indexString);
+            $sql = 'SELECT * FROM swag_package WHERE name = :packageType';
+            $packageTypeDetails = $this->connection->executeQuery($sql, ['packageType' => $packageType])->fetch();
+
+            if ($packageTypeDetails) {
+                 $packageTypeData[$packageType] = $packageTypeDetails;
+             }
+
+        }
+        $data->set('packageTypeData',$packageTypeData);
+        $data->set('packageArr',$packageArr);
 
         try {
             $message = $this->packageCollectionFormRoute
@@ -53,6 +77,7 @@ class PackageFormController extends StorefrontController
                 'alert' => $message,
             ];
         } catch (ConstraintViolationException $formViolations) {
+            dd($formViolations);
             $violations = [];
             foreach ($formViolations->getViolations() as $violation) {
                 $violations[] = $violation->getMessage();

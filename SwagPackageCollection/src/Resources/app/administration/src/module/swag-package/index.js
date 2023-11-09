@@ -44,9 +44,10 @@ Module.register('swag-package', {
 
     settingsItem: [{
         to: 'swag.package.index',
-        group: 'system',
+        group: 'plugins',
         icon: 'default-shopping-paper-bag-product',
         name: 'swag-package.general.mainMenuItemGeneral',
+        icon: 'default-shopping-paper-bag-product',
     }]
     // navigation: [{
     //     parent: 'sw-extension',

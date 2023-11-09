@@ -1,0 +1,26 @@
+{% block cms_element_from_select %}
+    <div class="form-group">
+        {% block cms_element_from_select_label %}
+        <label>{{ label | trans }}</label>
+        {% endblock %}
+
+        {% block cms_element_from_select_select %}
+        <select
+            class="custom-select"
+            id="form-{{ fieldName }}"
+            name='{{ fieldName }}'
+            {% if required %}required="required"{% endif %}
+        >
+            <option value="">{{ "collectionForm.labels.select_package_type" | trans }}</option>
+            {% for package in options %}
+                <option value="{{ package.name }}">{{ package.name }} ({{ package.height }}x{{ package.width }}x{{ package.length }})</option>
+            {% endfor %}
+        </select>
+            {% if formViolations.getViolations( '/' ~ fieldName ) is not empty %}
+                {% sw_include '@Storefront/storefront/utilities/form-violation.html.twig' with {
+                    violationPath: ('/' ~ fieldName)
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

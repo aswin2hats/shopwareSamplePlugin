@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SwagPackageCollection\Core\Content\Package\SalesChannel;
+namespace SwagPackageCollection\Core\Content\Package\Service;
 
 use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Struct\Struct;

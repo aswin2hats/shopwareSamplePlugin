@@ -1,0 +1,25 @@
+{% block cms_element_from_select %}
+    <div class="form-group">
+        {% block cms_element_from_select_label %}
+        <label>{{ label | trans }}</label>
+        {% endblock %}
+
+        {% block cms_element_from_select_select %}
+        <select
+            class="custom-select"
+            id="form-{{ fieldName }}"
+            name='{{ fieldName }}'
+            {% if required %}required="required"{% endif %}
+        >
+            {% for option in options %}
+                <option value="{{ option.id }}">{{ option.displayName }}</option>
+            {% endfor %}
+        </select>
+            {% if formViolations.getViolations( '/' ~ fieldName ) is not empty %}
+                {% sw_include '@Storefront/storefront/utilities/form-violation.html.twig' with {
+                    violationPath: ('/' ~ fieldName)
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace SwagPackageCollection\Core\Content\Package\Service;
+
 use Shopware\Core\Content\LandingPage\LandingPageDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
@@ -18,9 +20,6 @@ use Shopware\Core\Framework\Validation\Exception\ConstraintViolationException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use SwagPackageCollection\Core\Content\Package\Event\PackageCollectionFormEvent;
-use SwagPackageCollection\Core\Content\Package\SalesChannel\AbstractPackageCollectionFormRoute;
-use SwagPackageCollection\Core\Content\Package\SalesChannel\PackageCollectionFormResponse;
-use SwagPackageCollection\Core\Content\Package\SalesChannel\PackageCollectionFormRouteResponseStruct;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -34,6 +33,8 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
     private DataValidationFactoryInterface $packageCollectionFormValidationFactory;
 
     private DataValidator $validator;
+
+    private RequestStack $requestStack;
 
     private EventDispatcherInterface $eventDispatcher;
 
@@ -49,28 +50,24 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
 
     private EntityRepositoryInterface $productRepository;
 
-    private RequestStack $requestStack;
-
-    private RateLimiter $rateLimiter;
-
     /**
      * @internal
      */
     public function __construct(
         DataValidationFactoryInterface $packageCollectionFormValidationFactory,
         DataValidator $validator,
+        RequestStack $requestStack,
         EventDispatcherInterface $eventDispatcher,
         SystemConfigService $systemConfigService,
         EntityRepositoryInterface $cmsSlotRepository,
         EntityRepositoryInterface $salutationRepository,
         EntityRepositoryInterface $categoryRepository,
         EntityRepositoryInterface $landingPageRepository,
-        EntityRepositoryInterface $productRepository,
-        RequestStack $requestStack,
-        RateLimiter $rateLimiter
+        EntityRepositoryInterface $productRepository
     ) {
         $this->packageCollectionFormValidationFactory = $packageCollectionFormValidationFactory;
         $this->validator = $validator;
+        $this->requestStack = $requestStack;
         $this->eventDispatcher = $eventDispatcher;
         $this->systemConfigService = $systemConfigService;
         $this->cmsSlotRepository = $cmsSlotRepository;
@@ -78,8 +75,6 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
         $this->categoryRepository = $categoryRepository;
         $this->landingPageRepository = $landingPageRepository;
         $this->productRepository = $productRepository;
-        $this->requestStack = $requestStack;
-        $this->rateLimiter = $rateLimiter;
     }
 
     public function getDecorated(): AbstractPackageCollectionFormRoute
@@ -93,11 +88,11 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
      */
     public function load(RequestDataBag $data, SalesChannelContext $context): PackageCollectionFormResponse
     {
-        $this->validateContactForm($data, $context);
+        $this->validatePackageCollectionForm($data, $context);
 
         if (($request = $this->requestStack->getMainRequest()) !== null && $request->getClientIp() !== null) {
-            $this->rateLimiter->ensureAccepted(RateLimiter::CONTACT_FORM, $request->getClientIp());
-        }
+            // $this->rateLimiter->ensureAccepted('package_collection_form', $request->getClientIp());
+         }
 
         $mailConfigs = $this->getMailConfigs($context, $data->get('slotId'), $data->get('navigationId'), $data->get('entityName'));
 
@@ -137,7 +132,7 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
         return new PackageCollectionFormResponse($result);
     }
 
-    private function validateContactForm(DataBag $data, SalesChannelContext $context): void
+    private function validatePackageCollectionForm(DataBag $data, SalesChannelContext $context): void
     {
         $definition = $this->packageCollectionFormValidationFactory->create($context);
         $violations = $this->validator->getViolations($data->all(), $definition);
@@ -157,18 +152,11 @@ class PackageCollectionRoute extends AbstractPackageCollectionFormRoute
 
         $criteria = new Criteria([$navigationId]);
 
-        switch ($entityName) {
-            case ProductDefinition::ENTITY_NAME:
-                $entity = $this->productRepository->search($criteria, $context->getContext())->first();
-
-                break;
-            case LandingPageDefinition::ENTITY_NAME:
-                $entity = $this->landingPageRepository->search($criteria, $context->getContext())->first();
-
-                break;
-            default:
-                $entity = $this->categoryRepository->search($criteria, $context->getContext())->first();
-        }
+        $entity = match ($entityName) {
+            ProductDefinition::ENTITY_NAME => $this->productRepository->search($criteria, $context->getContext())->first(),
+            LandingPageDefinition::ENTITY_NAME => $this->landingPageRepository->search($criteria, $context->getContext())->first(),
+            default => $this->categoryRepository->search($criteria, $context->getContext())->first(),
+        };
 
         if (!$entity) {
             return $mailConfigs;
